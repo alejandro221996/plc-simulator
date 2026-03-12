@@ -101,24 +101,24 @@ describe('Challenge Integration Tests', () => {
   describe('Garage Door Challenges', () => {
     const challenges = scenarioChallenges.get('garage-door')!
 
-    test('should validate faster blink challenge', () => {
-      const fasterBlinkChallenge = challenges.find(c => c.id === 'faster-blink')!
+    test('should validate quick auto-close challenge', () => {
+      const quickAutoCloseChallenge = challenges.find(c => c.id === 'quick-auto-close')!
       
-      const memoryWith05s: PLCMemory = {
+      const memoryWith2s: PLCMemory = {
         inputs: {},
         outputs: {},
         bits: {},
-        timers: { 'T4:0': { preset: 0.5, accumulated: 0, done: false, timing: false, enabled: false } }
+        timers: { 'T4:0': { preset: 2, accumulated: 0, done: false, timing: false, enabled: false } }
       }
       
-      expect(fasterBlinkChallenge.validate(memoryWith05s, 1, [])).toBe(true)
+      expect(quickAutoCloseChallenge.validate(memoryWith2s, 1, [])).toBe(true)
     })
 
     test('should validate safety light challenge', () => {
       const safetyLightChallenge = challenges.find(c => c.id === 'safety-light')!
       
       const memoryWithObstacleAndLightOn: PLCMemory = {
-        inputs: { 'I:0/3': true },
+        inputs: { 'I:0/4': true },
         outputs: { 'O:0/2': true },
         bits: {},
         timers: {}

@@ -82,16 +82,16 @@ describe('evaluateRungs', () => {
 
   test('should handle timer TON operation', () => {
     const memory: PLCMemory = {
-      inputs: {},
+      inputs: { 'I:0/0': true },
       outputs: {},
-      bits: { 'B3:0/0': true },
+      bits: {},
       timers: { 'T4:0': { preset: 1, accumulated: 0, done: false, timing: false, enabled: false } }
     }
     
     const rung: Rung = {
       id: 'test-rung',
       elements: [
-        { id: 'e1', type: 'contact-no', address: 'B3:0/0' },
+        { id: 'e1', type: 'contact-no', address: 'I:0/0' },
         { id: 'e2', type: 'timer-ton', address: 'T4:0' }
       ]
     }
@@ -113,31 +113,31 @@ describe('evaluateRungs', () => {
 
   test('should reset timer on power loss', () => {
     const memory: PLCMemory = {
-      inputs: {},
+      inputs: { 'I:0/0': true },
       outputs: {},
-      bits: { 'B3:0/0': true },
+      bits: {},
       timers: { 'T4:0': { preset: 5, accumulated: 2, done: false, timing: true, enabled: true } }
     }
     
     const rung: Rung = {
       id: 'test-rung',
       elements: [
-        { id: 'e1', type: 'contact-no', address: 'B3:0/0' },
+        { id: 'e1', type: 'contact-no', address: 'I:0/0' },
         { id: 'e2', type: 'timer-ton', address: 'T4:0' }
       ]
     }
 
-    memory.bits['B3:0/0'] = false
+    memory.inputs['I:0/0'] = false
     const result = evaluateRungs([rung], memory, 0.1)
     expect(result.timers['T4:0'].accumulated).toBe(0)
     expect(result.timers['T4:0'].done).toBe(false)
   })
 
-  test('should handle reset bit B3:0/1', () => {
+  test('should handle reset bit B3:RESET', () => {
     const memory: PLCMemory = {
       inputs: {},
       outputs: { 'O:0/0': true },
-      bits: { 'B3:0/1': true },
+      bits: { 'B3:RESET': true },
       timers: { 'T4:0': { preset: 5, accumulated: 3, done: false, timing: true, enabled: true } }
     }
     
@@ -150,21 +150,21 @@ describe('evaluateRungs', () => {
     expect(result.timers['T4:0'].accumulated).toBe(0)
     expect(result.timers['T4:0'].done).toBe(false)
     expect(result.outputs['O:0/0']).toBe(false)
-    expect(result.bits['B3:0/1']).toBe(false)
+    expect(result.bits['B3:RESET']).toBe(false)
   })
 
   test('should apply speed multiplier', () => {
     const memory: PLCMemory = {
-      inputs: {},
+      inputs: { 'I:0/0': true },
       outputs: {},
-      bits: { 'B3:0/0': true },
+      bits: {},
       timers: { 'T4:0': { preset: 1, accumulated: 0, done: false, timing: false, enabled: false } }
     }
     
     const rung: Rung = {
       id: 'test-rung',
       elements: [
-        { id: 'e1', type: 'contact-no', address: 'B3:0/0' },
+        { id: 'e1', type: 'contact-no', address: 'I:0/0' },
         { id: 'e2', type: 'timer-ton', address: 'T4:0' }
       ]
     }
