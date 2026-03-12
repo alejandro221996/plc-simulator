@@ -1,0 +1,157 @@
+/* Ladder Editor Styles */
+.ladder-editor {
+  width: 100%;
+  height: 100%;
+  background: var(--flow-bg);
+  font-family: 'Courier New', monospace;
+}
+
+.ladder-editor .react-flow__viewport {
+  background: var(--flow-bg);
+}
+
+.ladder-editor .react-flow__controls {
+  background: var(--controls-bg);
+  border: 1px solid var(--border-color);
+}
+
+.ladder-editor .react-flow__controls button {
+  background: var(--input-bg);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+}
+
+.ladder-editor .react-flow__controls button:hover {
+  background: var(--border-light);
+}
+
+/* Energized edges (power flow) */
+.ladder-editor .react-flow__edge.energized .react-flow__edge-path {
+  stroke: #00ff88;
+  stroke-width: 3px;
+  animation: power-flow 1s linear infinite;
+}
+
+.ladder-editor .react-flow__edge.energized .react-flow__edge-path {
+  filter: drop-shadow(0 0 4px #00ff88);
+}
+
+/* Power flow animation */
+@keyframes power-flow {
+  0% {
+    stroke-dasharray: 8 4;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dasharray: 8 4;
+    stroke-dashoffset: 12;
+  }
+}
+
+/* Default edges */
+.ladder-editor .react-flow__edge-path {
+  stroke: var(--border-light);
+  stroke-width: 2px;
+}
+
+/* Node selection */
+.ladder-editor .react-flow__node.selected {
+  box-shadow: 0 0 8px #4488ff;
+}
+
+/* Minimap */
+.ladder-editor .react-flow__minimap {
+  background: var(--controls-bg);
+  border: 1px solid var(--border-color);
+}
+
+/* Toolbar container */
+.ladder-toolbar-container {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+}
+
+.ladder-flow-container {
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+/* Interactive element styles */
+.ladder-node-delete-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #ff3333;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.ladder-node-delete-btn:hover {
+  background: #ff5555;
+  transform: scale(1.1);
+}
+
+.ladder-node-edit-input {
+  background: var(--input-bg);
+  border: 1px solid var(--border-light);
+  color: #0ff;
+  font-family: 'Courier New', monospace;
+  font-size: inherit;
+  padding: 2px 4px;
+  border-radius: 2px;
+  text-align: center;
+  outline: none;
+}
+
+.ladder-node-edit-input:focus {
+  border-color: #0ff;
+  box-shadow: 0 0 4px rgba(0, 255, 255, 0.3);
+}
+
+.ladder-add-rung-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--input-bg);
+  border: 2px solid var(--border-light);
+  color: #0ff;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.ladder-add-rung-btn:hover {
+  background: var(--border-color);
+  border-color: #0ff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+/* Drop indicator */
+.ladder-drop-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #0ff;
+  box-shadow: 0 0 4px #0ff;
+  z-index: 5;
+  pointer-events: none;
+}
